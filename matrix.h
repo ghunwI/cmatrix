@@ -11,8 +11,12 @@ typedef struct matrix_t
 	double ** matrix;
 } matrix;
 #endif
+matrix add(matrix, matrix);
 matrix create_matrix(int, int);
 void free_matrix(matrix);
-matrix add(matrix, matrix);
+int is_equal(matrix, matrix);
+int is_same_size(matrix, matrix);
+int is_valid(matrix);
+matrix join_matrices(matrix,matrix);
 matrix multiply(matrix, matrix);
 void print_matrix(matrix);

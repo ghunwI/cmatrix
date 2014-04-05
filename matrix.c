@@ -5,18 +5,25 @@
 */
 #include "matrix.h"
 /*
-typedef struct matrix_t
-{
-	int coloums;
-	int rows;
-	double ** matrix;
-} matrix;
-matrix create_matrix(int, int);
-void free_matrix(matrix);
-matrix add(matrix, matrix);
-matrix multiply(matrix, matrix);
+Notes: If a matrix returns
 */
-
+matrix add(matrix A, matrix B)//provide add_s to send error messages
+{
+	matrix AB;
+	#ifdef SAFETY
+	if(A.rows != B.rows || A.coloums != B.coloums) {AB.rows=0;AB.coloums=0;return AB; }
+	#endif
+	int i,j;
+	AB = create_matrix(A.rows,A.coloums);
+	for(i = 0; i < A.rows; i++)
+	{
+		for(j = 0; j < A.coloums; j++)
+		{
+			AB.matrix[i][j] = A.matrix[i][j] + B.matrix[i][j];
+		}
+	}
+	return AB;
+}
 matrix create_matrix(int ro, int co)
 {
 	matrix m;
@@ -39,25 +46,54 @@ void free_matrix(matrix m)
 	}
 	free(m.matrix);
 }
-matrix add(matrix A, matrix B)//provide add_s to send error messages
+int is_equal(matrix A, matrix B)
 {
-	matrix AB;
-	//if(A.rows != B.rows || A.coloums != B.coloums) {AB.rows=0;AB.coloums=0;return AB }
+	if(A.rows != B.rows || A.coloums != B.coloums) { return 0; }
 	int i,j;
-	AB = create_matrix(A.rows,A.coloums);
 	for(i = 0; i < A.rows; i++)
 	{
 		for(j = 0; j < A.coloums; j++)
 		{
-			AB.matrix[i][j] = A.matrix[i][j] + B.matrix[i][j];
+			if(A.matrix[i][j] != B.matrix[i][j]) { return 0; }
 		}
 	}
-	return AB;
+	return 1;
+}
+int is_same_size(matrix A, matrix B)
+{
+	if(A.rows != B.rows || A.coloums != B.coloums) { return 0; }
+	else { return 1; }
+}
+int is_valid(matrix m)//This will see if the matrix has any 0 dimensions
+{
+	if(m.rows == 0 || m.coloums == 0) {return 0;}
+	return 1;
+}
+matrix join_matrices(matrix A, matrix B)//This will take an n*m and n*r matrix and create a n*(m+r) matrix
+{	
+	matrix AjB;
+	int i,j;
+	if(A.rows != B.rows){AjB.rows = 0; AjB.coloums = 0; return AjB;}
+	AjB = create_matrix(A.rows, A.coloums + B.coloums);
+	for(i = 0; i < A.rows; i++)
+	{
+		for(j = 0; j < A.coloums; j++)
+		{
+			AjB.matrix[i][j] = A.matrix[i][j];
+		}
+		for(j = A.coloums; j < AjB.coloums; j++)
+		{
+			AjB.matrix[i][j] = B.matrix[i][(j-A.coloums)];
+		}
+	}
+	return AjB;
 }
 matrix multiply(matrix A, matrix B)
 {
 	matrix AB;
-	//if(A.coloums != B.rows) {AB.rows=0;AB.coloums=0;return AB }
+	#ifdef SAFETY
+	if(A.coloums != B.rows) {AB.rows=0;AB.coloums=0;return AB; }
+	#endif
 	int i,j,k;
 	AB = create_matrix(A.rows,B.coloums);
 	for(i = 0; i < A.rows; i++)
@@ -82,7 +118,7 @@ void print_matrix(matrix m)
 		{
 			printf("%f ", m.matrix[i][j]);
 		}
-		print("\n");
+		printf("\n");
 	}
 }
 	

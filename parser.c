@@ -27,9 +27,7 @@ matrix parse(char * str, int rows, int coloums)
 		m.matrix[i][0] = atof(nums[i][0]);
 		for(j = 1; j < coloums; j++)
 		{
-			int k = 0;
 			nums[i][j] = strtok(NULL, ",");
-			int l = 0;
 			m.matrix[i][j] = atof(nums[i][j]);	
 		}
 	}
