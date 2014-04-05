@@ -6,7 +6,7 @@
 #define FOO_H
 typedef struct matrix_t
 {
-	int coloums;
+	int coloumns;
 	int rows;
 	double ** matrix;
 } matrix;
