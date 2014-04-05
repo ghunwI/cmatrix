@@ -73,17 +73,16 @@ matrix multiply(matrix A, matrix B)
 	}
 	return AB;
 }
-
 void print_matrix(matrix m)
 {
 	int i,j;
 	for(i = 0; i < m.rows; i++)
 	{
-		printf("\n");
 		for(j = 0; j < m.coloums; j++)
 		{
 			printf("%f ", m.matrix[i][j]);
 		}
+		print("\n");
 	}
 }
 	
