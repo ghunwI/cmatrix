@@ -31,6 +31,8 @@ matrix parse(char * str, int rows, int coloumns)
 			m.matrix[i][j] = atof(nums[i][j]);	
 		}
 	}
+	free(tokens);
+	free(nums);
 	return m;
 	//nums should have the number
 }

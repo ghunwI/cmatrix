@@ -1,2 +1,2 @@
 all:
-	gcc main.c matrix.c parser.c -o matrix -g -Wall
+	gcc main.c matrix.c parser.c vector.c -o matrix -g -Wall
