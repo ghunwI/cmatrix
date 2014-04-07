@@ -2,14 +2,17 @@
 #include<stdlib.h>
 #include <math.h>
 
-#ifndef VECTOR
-#define VECTOR
-#include "matrix.h"
+#ifndef VECTOR_STRUCT
+#define VECTOR_STRUCT
 typedef struct vector_t
 {
 	int length;
 	double * vals;
 } vector;
+#endif
+#include "matrix.h"
+#ifndef VECTOR_FUNC
+#define VECTOR_FUNC
 vector add_vectors(vector, vector);
 vector create_vector(int);
 double dot_vectors(vector,vector);

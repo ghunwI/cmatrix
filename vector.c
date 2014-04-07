@@ -22,7 +22,7 @@ vector create_vector(int size)
 double dot_vectors(vector v1 ,vector v2)
 {
 	#ifdef SAFETY
-	if(v1.length != v2.length) { return NaN; }
+	if(v1.length != v2.length) { return (0.0/0.0); }
 	#endif
 	int i;
 	double product = 0;

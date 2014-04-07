@@ -5,7 +5,8 @@
 */
 #include "matrix.h"
 /*
-Notes: If a matrix returns
+Notes: If a matrix function returns with a matrix of zero size, then an error occured
+
 */
 matrix add(matrix A, matrix B)//provide add_s to send error messages
 {
@@ -58,6 +59,39 @@ int is_equal(matrix A, matrix B)
 		}
 	}
 	return 1;
+}
+vector get_row(matrix A, int row)
+{
+	vector v;
+	#ifdef SAFETY
+	if(row >= A.rows) {v.length = 0; return v;} 
+	#endif
+	v.length = A.coloumns;
+	v.vals = malloc(sizeof(double) * A.coloumns);
+	v.vals = memcpy(v.vals, A.matrix[row], sizeof(double) * A.coloumns);
+	return v;
+}
+vector get_coloumn(matrix A, int coloumn)
+{
+	vector v;
+	#ifdef SAFETY
+	if(coloumn >= A.coloumns) {v.length = 0; return v;}
+	#endif
+	int i;
+	v.length = A.rows;
+	v.vals = malloc(sizeof(double) * A.rows);
+	for(i = 0; i < A.rows; i++)
+	{
+		v.vals[i] = A.matrix[i][coloumn];
+	}
+	return v;
+}
+double get_element(matrix A,int row, int coloumn)// this is a wrapper around matrix notation
+{
+	#ifdef SAFETY 
+	if(row >= A.rows || coloumn >= A.coloumns) {return (0.0/0.0);}
+	#endif
+	return A.matrix[row][coloumn];
 }
 int is_same_size(matrix A, matrix B)
 {
@@ -120,6 +154,20 @@ void print_matrix(matrix m)
 		}
 		printf("\n");
 	}
+}
+matrix transpose(matrix A)
+{
+	matrix At;
+	int i,j;
+	At = create_matrix(A.coloumns, A.rows);
+	for(j = 0; j < A.coloumns; j++)
+	{
+		for(i = 0; i < A.rows; i++)
+		{
+			At.matrix[i][j] = A.matrix[j][i];
+		}
+	}
+	return A;
 }
 	
 

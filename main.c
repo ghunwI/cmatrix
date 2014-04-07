@@ -19,5 +19,8 @@ int main(int argn, char * argc[])
 	free_matrix(three);
 	free(word);
 	free(wordd);
+	vector v = create_vector(10);
+	free_vector(v);
+	printf("%lu\n%lu\n", sizeof(vector),sizeof(matrix));
 	return 22;
 }

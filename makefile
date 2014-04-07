@@ -1,2 +1,3 @@
+compiler = clang
 all:
-	gcc main.c matrix.c parser.c vector.c -o matrix -g -Wall
+	$(compiler) main.c matrix.c parser.c vector.c -o matrix -g -Wall -D SAFETY
