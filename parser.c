@@ -1,4 +1,4 @@
-/*
+/*n
 #include<stdio.h>
 #include<stdlib.h>
 #include<string.h>
@@ -8,6 +8,7 @@
 #define MAX_ROWS 100
 #define MAX_COLOUMS 100
 
+char ** split(char *, char *);
 matrix parse(char * str, int rows, int coloumns)
 {	
 	matrix m = create_matrix(rows,coloumns);
@@ -35,4 +36,12 @@ matrix parse(char * str, int rows, int coloumns)
 	free(nums);
 	return m;
 	//nums should have the number
+}
+char ** split(char * str, char * chr)//Wrapper around strto
+{
+	char ** substrings = malloc(sizeof(char*) * 10);
+	strtok(str,chr);
+	int i = 1;
+	while((str = strtok(NULL,chr)) != NULL){ i++;}
+	return substrings;
 }

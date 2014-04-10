@@ -15,7 +15,7 @@ typedef struct matrix_t
 #define MATRIX_FUNC
 #include "vector.h" //these two headers reference each other. I am not sure how to declare structs before declaring functions for both
 matrix add(matrix, matrix);
-void add_row(matrix, int, int);
+void add_row(matrix, int, double, int);
 matrix create_matrix(int, int);
 void free_matrix(matrix);
 vector get_coloumn(matrix,int);

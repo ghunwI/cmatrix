@@ -24,9 +24,9 @@ matrix add(matrix A, matrix B)//<bar>provide add_s to send error messages</bar>
 	}
 	return AB;
 }
-void add_row(matrix A, int row, int target_row)
+void add_row(matrix A, int row, double factor, int target_row)
 {
-	int i;for(i=0;i<A.coloumns;i++){A.matrix[target_row]+=A.matrix[row];}
+	int i;for(i=0;i<A.coloumns;i++){A.matrix[target_row][i]+=A.matrix[row][i]*factor;}
 }
 matrix create_matrix(int ro, int co)
 {
@@ -63,18 +63,21 @@ int is_equal(matrix A, matrix B)
 	}
 	return 1;
 }
-matrix gauss(matrix A)//NOT READY
+/*matrix gauss(matrix A)//NOT READY
 {	//don't try and interpret results
 	//This will work recursively: change A such that the first coloum 1 than 0s, and then apply to submatrices to get a diagonal  
 	//first we see if the first row is 0
-	double zerozero = A.matrix[0][0]
+	matrix Ag;
+	double zerozero = A.matrix[0][0];
 	multiply_row(A.matrix,0,(1.0/zerozero));
+	int i;
 	for(i = 1; i < A.rows; i++)
-	{
-		matrix
+	{	
+		zerozero = A.matrix[i][0]
+		add_row(Ag,0,zerozero,i);
 	}
 	//Should I copy submatrix, solve then replace, or try and create a submatrix via pointer arithmetic 
-}
+}*/
 vector get_row(matrix A, int row)
 {
 	vector v;
@@ -101,8 +104,17 @@ vector get_coloumn(matrix A, int coloumn)
 	}
 	return v;
 }
-matrix get_submatrix()
+matrix get_submatrix(matrix A, int top, int bot, int left, int right)//do not free_matrix this matrix
 {
+	matrix Asub;//This also assumes that functions only touch what there supposed to
+	A.rows = bot -top;
+	A.coloumns = right - left;
+	int i;
+	for(i = 0; i < A.rows; i++)
+	{
+		Asub.matrix[i] = A.matrix[top + i] + left;//think this is ok
+	}
+	return Asub;
 }
 double get_element(matrix A,int row, int coloumn)// this is a wrapper around matrix notation
 {
@@ -163,7 +175,7 @@ matrix multiply(matrix A, matrix B)
 }
 void multipy_row(matrix A, int row, double k)
 {
-	int i;for(i=0;i<A.coloumns;i++){A.matrix[row]*=k;}
+	int i;for(i=0;i<A.coloumns;i++){A.matrix[row][i]*=k;}
 }
 void print_matrix(matrix m)
 {
@@ -193,7 +205,7 @@ matrix transpose(matrix A)//does not affect struct
 }
 void switch_rows(matrix A, int row_one, int row_two)
 {
-	int size = sizeof(double) * A.coloums;
+	int size = sizeof(double) * A.coloumns;
 	double *temp = malloc(size);//can you to dynamically sized arrays
 	memcpy(temp,A.matrix[row_one],size);
 	memcpy(A.matrix[row_one],A.matrix[row_two],size);
